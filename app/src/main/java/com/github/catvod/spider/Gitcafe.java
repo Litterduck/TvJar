@@ -157,8 +157,7 @@ public class Gitcafe extends Spider {
                     HashMap<String, String> LT = LT();
                     for (Iterator<String> iter = b.iterator(); iter.hasNext(); ) {
                         String element = iter.next();
-                        String content = OkHttpUtil.string("https://gitcafe.net/alipaper/data/" + element + ".json", LT);
-                       
+                        String content = OkHttpUtil.string("https://gitcafe.net/alipaper/data/" + element + ".json", LT);   
                         JSONArray jSONArray = new JSONArray(content);
                         for (int i = 0; i < jSONArray.length(); i++) {
                             JSONObject jSONObject = jSONArray.getJSONObject(i);
