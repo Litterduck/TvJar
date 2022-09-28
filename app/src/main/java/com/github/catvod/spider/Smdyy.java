@@ -38,6 +38,7 @@ import okhttp3.Call;
  */
 public class Smdyy extends Spider {
     private static final String siteUrl = "https://www.smdyy.cc";
+
     /**
      * 播放源配置
      */
@@ -46,19 +47,18 @@ public class Smdyy extends Spider {
      * 筛选配置
      */
     private JSONObject filterConfig;
+
     private Pattern regexCategory = Pattern.compile("/list/(\\d+).html");
     private Pattern regexVid = Pattern.compile("/kan/(\\d+).html");
     private Pattern regexPlay = Pattern.compile("/play/(\\d+)-(\\d+)-(\\d+).html");
     private Pattern regexPage = Pattern.compile("/show/(\\S+).html");
-
-    protected String ext = null;
 
     @Override
     public void init(Context context) {
         super.init(context);
         try {
             playerConfig = new JSONObject("{\"duoduozy\":{\"show\":\"高清线路\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"sohu\":{\"show\":\"优选7\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"qq\":{\"show\":\"优选3\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"bilibili\":{\"show\":\"bilibili\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"youku\":{\"show\":\"优选1\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"qiyi\":{\"show\":\"优选2\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"letv\":{\"show\":\"优选6\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"xigua\":{\"show\":\"西瓜视频\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"mgtv\":{\"show\":\"优选4\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"tkm3u8\":{\"show\":\"备用\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"},\"pptv\":{\"show\":\"优选5\",\"or\":999,\"ps\":\"0\",\"parse\":\"https://player.6080kan.cc/player/play.php?url=\"}}");
-            filterConfig = new JSONObject("{\"1\":[{\"key\":\"tid\",\"name\":\"类型\",\"value\":[{\"n\":\"全部\",\"v\":\"1\"},{\"n\":\"动作片\",\"v\":\"6\"},{\"n\":\"喜剧片\",\"v\":\"7\"},{\"n\":\"爱情片\",\"v\":\"8\"},{\"n\":\"科幻片\",\"v\":\"9\"},{\"n\":\"恐怖片\",\"v\":\"10\"},{\"n\":\"剧情片\",\"v\":\"11\"},{\"n\":\"战争片\",\"v\":\"12\"},{\"n\":\"犯罪片\",\"v\":\"20\"},{\"n\":\"惊悚片\",\"v\":\"21\"},{\"n\":\"冒险片\",\"v\":\"22\"},{\"n\":\"悬疑片\",\"v\":\"23\"},{\"n\":\"武侠片\",\"v\":\"24\"},{\"n\":\"奇幻片\",\"v\":\"25\"},{\"n\":\"纪录片\",\"v\":\"26\"},{\"n\":\"动画片\",\"v\":\"27\"}]},{\"key\":\"1\",\"name\":\"地区\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"大陆\",\"v\":\"大陆\"},{\"n\":\"香港\",\"v\":\"香港\"},{\"n\":\"台湾\",\"v\":\"台湾\"},{\"n\":\"美国\",\"v\":\"美国\"},{\"n\":\"法国\",\"v\":\"法国\"},{\"n\":\"英国\",\"v\":\"英国\"},{\"n\":\"日本\",\"v\":\"日本\"},{\"n\":\"韩国\",\"v\":\"韩国\"},{\"n\":\"德国\",\"v\":\"德国\"},{\"n\":\"泰国\",\"v\":\"泰国\"},{\"n\":\"印度\",\"v\":\"印度\"},{\"n\":\"意大利\",\"v\":\"意大利\"},{\"n\":\"西班牙\",\"v\":\"西班牙\"},{\"n\":\"加拿大\",\"v\":\"加拿大\"},{\"n\":\"其他\",\"v\":\"其他\"}]},{\"key\":\"11\",\"name\":\"年份\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"},{\"n\":\"2009\",\"v\":\"2009\"},{\"n\":\"2008\",\"v\":\"2008\"},{\"n\":\"2007\",\"v\":\"2007\"},{\"n\":\"2006\",\"v\":\"2006\"},{\"n\":\"2005\",\"v\":\"2005\"},{\"n\":\"2004\",\"v\":\"2004\"},{\"n\":\"2003\",\"v\":\"2003\"},{\"n\":\"2002\",\"v\":\"2002\"},{\"n\":\"2001\",\"v\":\"2001\"},{\"n\":\"2000\",\"v\":\"2000\"}]},{\"key\":\"4\",\"name\":\"语言\",\"value\":[{\"n\":\"全部\",\"v\":\"\"}]}],\"2\":[{\"key\":\"tid\",\"name\":\"类型\",\"value\":[{\"n\":\"全部\",\"v\":\"2\"},{\"n\":\"国产剧\",\"v\":\"13\"},{\"n\":\"港台剧\",\"v\":\"14\"},{\"n\":\"日韩剧\",\"v\":\"15\"},{\"n\":\"欧美剧\",\"v\":\"16\"},{\"n\":\"泰国剧\",\"v\":\"28\"}]},{\"key\":\"1\",\"name\":\"地区\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"大陆\",\"v\":\"大陆\"},{\"n\":\"香港\",\"v\":\"香港\"},{\"n\":\"韩国\",\"v\":\"韩国\"},{\"n\":\"美国\",\"v\":\"美国\"},{\"n\":\"日本\",\"v\":\"日本\"},{\"n\":\"法国\",\"v\":\"法国\"},{\"n\":\"英国\",\"v\":\"英国\"},{\"n\":\"德国\",\"v\":\"德国\"},{\"n\":\"台湾\",\"v\":\"台湾\"},{\"n\":\"泰国\",\"v\":\"泰国\"},{\"n\":\"印度\",\"v\":\"印度\"},{\"n\":\"其他\",\"v\":\"其他\"}]},{\"key\":\"11\",\"name\":\"年份\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"},{\"n\":\"2009\",\"v\":\"2009\"},{\"n\":\"2008\",\"v\":\"2008\"},{\"n\":\"2007\",\"v\":\"2007\"},{\"n\":\"2006\",\"v\":\"2006\"},{\"n\":\"2005\",\"v\":\"2005\"},{\"n\":\"2004\",\"v\":\"2004\"},{\"n\":\"2003\",\"v\":\"2003\"},{\"n\":\"2002\",\"v\":\"2002\"},{\"n\":\"2001\",\"v\":\"2001\"},{\"n\":\"2000\",\"v\":\"2000\"}]},{\"key\":\"4\",\"name\":\"语言\",\"value\":[{\"n\":\"全部\",\"v\":\"\"}]}],\"4\":[{\"key\":\"3\",\"name\":\"剧情\",\"value\":[{\"n\":\"全部\",\"v\":\"3\"},{\"n\":\"情感\",\"v\":\"情感\"},{\"n\":\"科幻\",\"v\":\"科幻\"},{\"n\":\"热血\",\"v\":\"热血\"},{\"n\":\"推理\",\"v\":\"推理\"},{\"n\":\"搞笑\",\"v\":\"搞笑\"},{\"n\":\"冒险\",\"v\":\"冒险\"},{\"n\":\"萝莉\",\"v\":\"萝莉\"},{\"n\":\"校园\",\"v\":\"校园\"},{\"n\":\"动作\",\"v\":\"动作\"},{\"n\":\"机战\",\"v\":\"机战\"},{\"n\":\"运动\",\"v\":\"运动\"},{\"n\":\"战争\",\"v\":\"战争\"},{\"n\":\"少年\",\"v\":\"少年\"},{\"n\":\"少女\",\"v\":\"少女\"},{\"n\":\"社会\",\"v\":\"社会\"},{\"n\":\"原创\",\"v\":\"原创\"},{\"n\":\"亲子\",\"v\":\"亲子\"},{\"n\":\"益智\",\"v\":\"益智\"},{\"n\":\"励志\",\"v\":\"励志\"},{\"n\":\"其他\",\"v\":\"其他\"}]},{\"key\":\"1\",\"name\":\"地区\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"内地\",\"v\":\"内地\"},{\"n\":\"韩国\",\"v\":\"韩国\"},{\"n\":\"香港\",\"v\":\"香港\"},{\"n\":\"台湾\",\"v\":\"台湾\"},{\"n\":\"日本\",\"v\":\"日本\"},{\"n\":\"美国\",\"v\":\"美国\"},{\"n\":\"泰国\",\"v\":\"泰国\"},{\"n\":\"英国\",\"v\":\"英国\"},{\"n\":\"新加坡\",\"v\":\"新加坡\"},{\"n\":\"其他\",\"v\":\"其他\"}]},{\"key\":\"11\",\"name\":\"年份\",\"value\":[{\"n\":\"全部\",\"v\":\"\"},{\"n\":\"2022\",\"v\":\"2022\"},{\"n\":\"2021\",\"v\":\"2021\"},{\"n\":\"2020\",\"v\":\"2020\"},{\"n\":\"2019\",\"v\":\"2019\"},{\"n\":\"2018\",\"v\":\"2018\"},{\"n\":\"2017\",\"v\":\"2017\"},{\"n\":\"2016\",\"v\":\"2016\"},{\"n\":\"2015\",\"v\":\"2015\"},{\"n\":\"2014\",\"v\":\"2014\"},{\"n\":\"2013\",\"v\":\"2013\"},{\"n\":\"2012\",\"v\":\"2012\"},{\"n\":\"2011\",\"v\":\"2011\"},{\"n\":\"2010\",\"v\":\"2010\"},{\"n\":\"2009\",\"v\":\"2009\"},{\"n\":\"2008\",\"v\":\"2008\"},{\"n\":\"2007\",\"v\":\"2007\"},{\"n\":\"2006\",\"v\":\"2006\"},{\"n\":\"2005\",\"v\":\"2005\"},{\"n\":\"2004\",\"v\":\"2004\"},{\"n\":\"2003\",\"v\":\"2003\"},{\"n\":\"2002\",\"v\":\"2002\"},{\"n\":\"2001\",\"v\":\"2001\"},{\"n\":\"2000\",\"v\":\"2000\"}]},{\"key\":\"4\",\"name\":\"语言\",\"value\":[{\"n\":\"全部\",\"v\":\"\"}]}]}");
+            filterConfig = new JSONObject("{}");
         } catch (JSONException e) {
             SpiderDebug.log(e);
         }
@@ -103,7 +103,9 @@ public class Smdyy extends Spider {
                 if (filter) {
                     show = name.equals("电影") ||
                             name.equals("电视剧") ||
-                            name.equals("动漫");
+                            name.equals("动漫") ||
+                            name.equals("日韩剧") ||
+                            name.equals("欧美剧");
                 }
                 if (show) {
                     Matcher mather = regexCategory.matcher(ele.attr("href"));
@@ -186,7 +188,7 @@ public class Smdyy extends Spider {
             int pageCount = 0;
             int page = -1;
 
-            Elements pageInfo = doc.select("ul.stui-page__item li");
+            Elements pageInfo = doc.select(".stui-page__item li");
             if (pageInfo.size() == 0) {
                 page = Integer.parseInt(pg);
                 pageCount = page;
@@ -196,6 +198,7 @@ public class Smdyy extends Spider {
                     Element a = li.selectFirst("a");
                     if (a == null)
                         continue;
+                    String name = a.text();
                     if (page == -1 && li.hasClass("active")) {
                         Matcher matcher = regexPage.matcher(a.attr("href"));
                         if (matcher.find()) {
@@ -204,15 +207,15 @@ public class Smdyy extends Spider {
                             page = 0;
                         }
                     }
-                    String wy = doc.select("ul.stui-page__item li a").last().attr("href");
-                    Matcher matcher = regexPage.matcher(wy);
-                    if (matcher.find()) {
-                        pageCount = Integer.parseInt(matcher.group(1).split("-")[8]);
-                    } else {
-                        pageCount = 0;
+                    if (name.equals("尾页")) {
+                        Matcher matcher = regexPage.matcher(a.attr("href"));
+                        if (matcher.find()) {
+                            pageCount = Integer.parseInt(matcher.group(1).split("-")[8]);
+                        } else {
+                            pageCount = 0;
+                        }
+                        break;
                     }
-                    break;
-
                 }
             }
 
@@ -267,7 +270,6 @@ public class Smdyy extends Spider {
         }
         return content;
     }
-
     /**
      * 视频详情信息
      *
@@ -413,52 +415,52 @@ public class Smdyy extends Spider {
                 if (scContent.startsWith("var player_")) {
                     JSONObject player = new JSONObject(scContent.substring(scContent.indexOf('{'), scContent.lastIndexOf('}') + 1));
                     if (playerConfig.has(player.getString("from"))) {
-                        JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
-                        //String jxurl = "https://player.tjomet.com/lgyy/?url=" + player.getString("url");
-                        String jxurl = pCfg.getString("parse") + player.getString("url");
-                        Document doc = Jsoup.parse(OkHttpUtil.string(jxurl, getHeaders(jxurl)));
-                        Elements script = doc.select("body>script");
-                        for (int j = 0; j < script.size(); j++) {
-                            String Content = script.get(j).html().trim();
-                            Matcher matcher = urlt.matcher(Content);
-                            if (!matcher.find()) {
-                                return "";
-                            }
-                            String urlt = matcher.group(1);
-                            Matcher matcher1 = token.matcher(Content);
-                            if (!matcher1.find()) {
-                                return "";
-                            }
-                            String token = matcher1.group(1);
-                            Matcher matcher2 = vkey.matcher(Content);
-                            if (!matcher2.find()) {
-                                return "";
-                            }
-                            String vkey = matcher2.group(1);
-                            HashMap hashMap = new HashMap();
-                            hashMap.put("token", token);
-                            hashMap.put("url", urlt);
-                            hashMap.put("vkey", vkey);
-                            hashMap.put("sign", "smdyycc");
-                            OkHttpUtil.post(OkHttpUtil.defaultClient(), "https://player.6080kan.cc/player/xinapi.php", hashMap, new OKCallBack.OKCallBackString() {
-                                @Override
-                                protected void onFailure(Call call, Exception exc) {
-                                }
-
-                                public void onResponse(String str) {
-                                    try {
-                                        String url = new String(Base64.decode(new JSONObject(str).getString("url").substring(8).getBytes(), 0));
-                                        result.put("url", url.substring(8, url.length() - 8));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            });
-                            result.put("header", headers.toString());
-                            result.put("parse", 0);
-                            result.put("playUrl", "");
-
+                    JSONObject pCfg = playerConfig.getJSONObject(player.getString("from"));
+                    //String jxurl = "https://player.tjomet.com/lgyy/?url=" + player.getString("url");
+                    String jxurl = pCfg.getString("parse") + player.getString("url");
+                    Document doc = Jsoup.parse(OkHttpUtil.string(jxurl, getHeaders(jxurl)));
+                    Elements script = doc.select("body>script");
+                    for (int j = 0; j < script.size(); j++) {
+                        String Content = script.get(j).html().trim();
+                        Matcher matcher = urlt.matcher(Content);
+                        if (!matcher.find()) {
+                            return "";
                         }
+                        String urlt = matcher.group(1);
+                        Matcher matcher1 = token.matcher(Content);
+                        if (!matcher1.find()) {
+                            return "";
+                        }
+                        String token = matcher1.group(1);
+                        Matcher matcher2 = vkey.matcher(Content);
+                        if (!matcher2.find()) {
+                            return "";
+                        }
+                        String vkey = matcher2.group(1);
+                        HashMap hashMap = new HashMap();
+                        hashMap.put("token", token);
+                        hashMap.put("url", urlt);
+                        hashMap.put("vkey", vkey);
+                        hashMap.put("sign", "D4GE4tm2Q3NXbeeK");
+                        OkHttpUtil.post(OkHttpUtil.defaultClient(), "https://player.6080kan.cc/player/hd0L3TjH4m8zSK1N.php", hashMap, new OKCallBack.OKCallBackString() {
+                            @Override
+                            protected void onFailure(Call call, Exception exc) {
+                            }
+
+                            public void onResponse(String str) {
+                                try {
+                                    String url = new String(Base64.decode(new JSONObject(str).getString("url").substring(8).getBytes(), 0));
+                                    result.put("url", url.substring(8, url.length() - 8));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                        result.put("header", headers.toString());
+                        result.put("parse", 0);
+                        result.put("playUrl", "");
+
+                    }
                     }
                 }
             }
